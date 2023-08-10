@@ -220,7 +220,7 @@ public static class Program
                 httpContext.Response.ContentType = "text/html";
 
                 // Write to body of response
-                await using FileStream fileStream = new FileStream("./wwwroot/index.html", FileMode.Open);
+                await using FileStream fileStream = new FileStream("./wwwroot/index.html", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 await fileStream.CopyToAsync(httpContext.Response.Body);
                 Logger.Success("Request handled successfully");
             }
@@ -238,7 +238,7 @@ public static class Program
             try
             {
                 httpContext.Response.ContentType = "text/html";
-                await using FileStream fileStream = new FileStream($"./wwwroot{index}.html", FileMode.Open);
+                await using FileStream fileStream = new FileStream($"./wwwroot{index}.html", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 await fileStream.CopyToAsync(httpContext.Response.Body);
                 Logger.Success("Request handled successfully");
             }
@@ -259,7 +259,7 @@ public static class Program
                 string? contentType;
                 if (new FileExtensionContentTypeProvider().TryGetContentType(index, out contentType))
                     httpContext.Response.ContentType = contentType;
-                await using FileStream fileStream = new FileStream($"./wwwroot{index}", FileMode.Open);
+                await using FileStream fileStream = new FileStream($"./wwwroot{index}", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 await fileStream.CopyToAsync(httpContext.Response.Body);
                 Logger.Success("Request handled successfully");
             }
